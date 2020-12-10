@@ -29,6 +29,7 @@ def canUnlockAll(boxes):
                 locked.remove(key)
                 keys.extend(boxes[key])
 
+        # If these are equal no further boxes unlocked
         if len(locked) == was_locked:
             return False
 
