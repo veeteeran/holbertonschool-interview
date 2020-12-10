@@ -20,20 +20,15 @@ def canUnlockAll(boxes):
     --------------
     """
     locked = list(range(1, len(boxes)))
-    was_locked = len(locked)
     keys = boxes[0]
 
-    while locked:
-        for key in keys:
-            if key in locked:
-                locked.remove(key)
-                keys.extend(boxes[key])
+    for key in keys:
+        if key in locked:
+            locked.remove(key)
+            keys.extend(boxes[key])
 
-        # If these are equal no further boxes unlocked
-        if len(locked) == was_locked:
+        if locked:
             return False
-
-        was_locked = len(locked)
 
     return True
 
