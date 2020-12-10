@@ -27,8 +27,8 @@ def canUnlockAll(boxes):
             locked.remove(key)
             keys.extend(boxes[key])
 
-        if locked:
-            return False
+    if locked:
+        return False
 
     return True
 
