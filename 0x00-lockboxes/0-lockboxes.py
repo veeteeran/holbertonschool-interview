@@ -19,26 +19,22 @@ def canUnlockAll(boxes):
                 contains keys (int values) to other boxes
     --------------
     """
-    unique_list = list(set(boxes[0]))
-    for i in range(len(boxes)):
-        for j in unique_list:
-            if j > len(boxes):
-                unique_list.remove(j)
-                continue
-            # Get unique values from each list
-            values = set(boxes[j]) - set(unique_list)
-            # Create a new list
-            unique_list = unique_list + list(values)
+    locked = list(range(1, len(boxes)))
+    was_locked = len(locked)
+    keys = boxes[0]
 
-    # First box is always unlocked zero index doesn't matter
-    if (0 in unique_list):
-        unique_list.remove(0)
-    # Create a list of keys to compare against
-    all_keys = list(range(1, len(boxes)))
-    unique_list = sorted(unique_list)
-    if (unique_list == all_keys):
-        return True
-    return False
+    while locked:
+        for key in keys:
+            if key in locked:
+                locked.remove(key)
+                keys.extend(boxes[key])
+
+        if len(locked) == was_locked:
+            return False
+
+        was_locked = len(locked)
+
+    return True
 
 if __name__ == '__main__':
     canUnlockAll(boxes)
