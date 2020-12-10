@@ -36,7 +36,6 @@ def canUnlockAll(boxes):
     # Create a list of keys to compare against
     all_keys = list(range(1, len(boxes)))
     unique_list = sorted(unique_list)
-    print(unique_list)
     if (unique_list == all_keys):
         return True
     return False
