@@ -22,6 +22,9 @@ def canUnlockAll(boxes):
     unique_list = list(set(boxes[0]))
     for i in range(len(boxes)):
         for j in unique_list:
+            if j > len(boxes):
+                unique_list.remove(j)
+                continue
             # Get unique values from each list
             values = set(boxes[j]) - set(unique_list)
             # Create a new list
@@ -33,6 +36,7 @@ def canUnlockAll(boxes):
     # Create a list of keys to compare against
     all_keys = list(range(1, len(boxes)))
     unique_list = sorted(unique_list)
+    print(unique_list)
     if (unique_list == all_keys):
         return True
     return False
