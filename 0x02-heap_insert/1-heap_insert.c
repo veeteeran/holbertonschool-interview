@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "binary_trees.h"
-heap_t *finder(heap_t *root);
+heap_t *finder(heap_t *root, size_t level);
+static size_t _height(const heap_t *tree);
+heap_t *heapify(heap_t *node);
 
 /**
  * heap_insert - inserts a value into a Max Binary Heap
@@ -12,6 +14,7 @@ heap_t *finder(heap_t *root);
 heap_t *heap_insert(heap_t **root, int value)
 {
 	heap_t *new, *location;
+	size_t index;
 
 	if (!root)
 		return (NULL);
@@ -23,17 +26,26 @@ heap_t *heap_insert(heap_t **root, int value)
 		return (new);
 	}
 
-	location = finder(*root);
-
+	index = _height(*root);
+	location = *root;
+	for (; (int)index > 0; index--)
+	{
+	/*	printf("In loop: index: %lu\n", index);
+        */	location = finder(location, index);
+/*		printf("In loop: location->n: %d\n", location->n);
+*/	}
+/*	printf("outside loop: location->n: %d\n", location->n);
+*/
 	new = binary_tree_node(location, value);
 	if (!new)
                 return (NULL);
 
-	new->parent = location;
 	if (!location->left)
 		location->left = new;
 	else
 		location->right = new;
+
+	new = heapify(new);
 
 	return (new);
 }
@@ -43,23 +55,65 @@ heap_t *heap_insert(heap_t **root, int value)
  * @root: pointer to the root node of the Heap
  * Return: pointer to location of insertion, or NULL on failure
  */
-heap_t *finder(heap_t *root) {
-	heap_t *location;
+heap_t *finder(heap_t *root, size_t level) {
+	heap_t *location = NULL;
 
 	if (!root)
 		return (NULL);
 
-	location = root;
-/*	if (location->parent)
-		printf("location->parent->n: %d\n", location->parent->n);
-*/	printf("visited: %d\n", location->n);
-	printf("location: %p\n", (void*)location);
+/*	location = root;
+*/	if (level <= 1 && !root->right)
+	{
+/*		printf("base case\n");
+*/		return (root);
+	}
 
-	if (!location->right)
-		return (location);
+/*	printf("Inside finder: level: %lu\n", level);
+	printf("root->n: %d\n", root->n);
+*/        location = (finder(root->left, level - 1));
+/*        printf("below left side: location->n: %d\n", location->n);
+	printf("above right side: level: %lu\n", level);
+	printf("above right side: root->n: %d\n", root->n);
+*/	if (location->left && location->right)
+		location = (finder(root->right, level - 1));
 
-	if (location->left)
-		return (finder(location->left));
+	return (location);
+}
 
-	return (finder(location->right));
+/**
+ * _height - Measures the height of a binary tree
+ *
+ * @tree: Pointer to the node to measures the height
+ *
+ * Return: The height of the tree starting at @node
+ */
+static size_t _height(const heap_t *tree)
+{
+	size_t height_l;
+	size_t height_r;
+
+	height_l = tree->left ? 1 + _height(tree->left) : 0;
+	height_r = tree->right ? 1 + _height(tree->right) : 0;
+	return (height_l > height_r ? height_l : height_r);
+}
+
+/**
+ * heapify - bubble up so node value >= children
+ *
+ * @node: Pointer to the node to measure
+ *
+ */
+heap_t *heapify(heap_t *node)
+{
+	int temp;
+
+	while (node->parent && node->n > node->parent->n)
+	{
+		temp = node->n;
+		node->n = node->parent->n;
+		node->parent->n = temp;
+		node = node->parent;
+	}
+
+	return (node);
 }
