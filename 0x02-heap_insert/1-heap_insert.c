@@ -29,13 +29,8 @@ heap_t *heap_insert(heap_t **root, int value)
 	index = _height(*root);
 	location = *root;
 	for (; (int)index > 0; index--)
-	{
-/*		printf("In loop: index: %lu\n", index);
-*/		location = finder(location, index);
-/*		printf("In loop: location->n: %d\n", location->n);
-*/	}
-/*	printf("outside loop: location->n: %d\n", location->n);
-*/
+		location = finder(location, index);
+
 	new = binary_tree_node(location, value);
 	if (!new)
 		return (NULL);
@@ -63,20 +58,11 @@ heap_t *finder(heap_t *root, size_t level)
 	if (!root)
 		return (NULL);
 
-/*	location = root;
-*/	if (level <= 1 && !root->right)
-	{
-/*		printf("base case\n");
-*/		return (root);
-	}
-
-/*	printf("Inside finder: level: %lu\n", level);
-	printf("root->n: %d\n", root->n);
-*/        location = (finder(root->left, level - 1));
-/*        printf("below left side: location->n: %d\n", location->n);
-	printf("above right side: level: %lu\n", level);
-	printf("above right side: root->n: %d\n", root->n);
-*/	if (location->left && location->right)
+	if (level <= 1 && !root->right)
+			return (root);
+	
+	location = (finder(root->left, level - 1));
+	if (location->left && location->right)
 		location = (finder(root->right, level - 1));
 
 	return (location);
