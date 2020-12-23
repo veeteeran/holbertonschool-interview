@@ -59,8 +59,8 @@ heap_t *finder(heap_t *root, size_t level)
 		return (NULL);
 
 	if (level <= 1 && !root->right)
-			return (root);
-	
+		return (root);
+
 	location = (finder(root->left, level - 1));
 	if (location->left && location->right)
 		location = (finder(root->right, level - 1));
