@@ -30,15 +30,15 @@ heap_t *heap_insert(heap_t **root, int value)
 	location = *root;
 	for (; (int)index > 0; index--)
 	{
-	/*	printf("In loop: index: %lu\n", index);
-        */	location = finder(location, index);
+/*		printf("In loop: index: %lu\n", index);
+*/		location = finder(location, index);
 /*		printf("In loop: location->n: %d\n", location->n);
 */	}
 /*	printf("outside loop: location->n: %d\n", location->n);
 */
 	new = binary_tree_node(location, value);
 	if (!new)
-                return (NULL);
+		return (NULL);
 
 	if (!location->left)
 		location->left = new;
@@ -51,11 +51,13 @@ heap_t *heap_insert(heap_t **root, int value)
 }
 
 /**
- * finder: find parent for new node
+ * finder - find parent for new node
  * @root: pointer to the root node of the Heap
+ * @level: height of tree
  * Return: pointer to location of insertion, or NULL on failure
  */
-heap_t *finder(heap_t *root, size_t level) {
+heap_t *finder(heap_t *root, size_t level)
+{
 	heap_t *location = NULL;
 
 	if (!root)
@@ -99,9 +101,8 @@ static size_t _height(const heap_t *tree)
 
 /**
  * heapify - bubble up so node value >= children
- *
  * @node: Pointer to the node to measure
- *
+ * Return: location of swapped value
  */
 heap_t *heapify(heap_t *node)
 {
