@@ -1,9 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "binary_trees.h"
-heap_t *finder(heap_t *root, size_t level);
 static size_t _height(const heap_t *tree);
-heap_t *heapify(heap_t *node);
 
 /**
  * heap_insert - inserts a value into a Max Binary Heap
@@ -14,7 +12,7 @@ heap_t *heapify(heap_t *node);
 heap_t *heap_insert(heap_t **root, int value)
 {
 	heap_t *new, *location;
-	size_t index;
+	int level, height;
 
 	if (!root)
 		return (NULL);
@@ -26,10 +24,13 @@ heap_t *heap_insert(heap_t **root, int value)
 		return (new);
 	}
 
-	index = _height(*root);
-	location = *root;
-	for (; (int)index > 0; index--)
-		location = finder(location, index);
+	height = (int)_height(*root);
+	for (level = 0;  level <= height; level++)
+	{
+		location = finder(*root, level);
+		if (!location->right)
+			break;
+	}
 
 	new = binary_tree_node(location, value);
 	if (!new)
@@ -51,18 +52,19 @@ heap_t *heap_insert(heap_t **root, int value)
  * @level: height of tree
  * Return: pointer to location of insertion, or NULL on failure
  */
-heap_t *finder(heap_t *root, size_t level)
+heap_t *finder(heap_t *root, int level)
 {
 	heap_t *location = NULL;
 
 	if (!root)
 		return (NULL);
 
-	if (level <= 1 && !root->right)
+	if (level == 0 || (level == 1 && !root->right))
 		return (root);
 
 	location = (finder(root->left, level - 1));
-	if (location->left && location->right)
+
+	if (location->right)
 		location = (finder(root->right, level - 1));
 
 	return (location);
