@@ -7,7 +7,7 @@ def minOperations(n):
         Calculates the fewest number of operations needed to result
         in exactly n H characters in the file.
     """
-    if n < 2:
+    if type(n) is not int or n < 2:
         return 0
 
     summation = []
