@@ -1,4 +1,5 @@
 #include "sandpiles.h"
+
 /**
  * sandpiles_sum - computes the sum of two sandpiles
  * @grid1: 3x3 grid added to and printed
@@ -8,108 +9,119 @@
  */
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
-	int i, j, row = 3, col = 3;
-	int corner, edge, middle;
+	int i, j, temp[3][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+	bool stable = false;
 
-	for (i = 0; i < row; i++)
+	/* Adds the two grids */
+	for (i = 0; i < 3; i++)
 	{
-		for (j = 0; j < col; j++)
+		for (j = 0; j < 3; j++)
+		{
 			grid1[i][j] = grid1[i][j] + grid2[i][j];
+
+			if (grid1[i][j] <= 3)
+				stable = true;
+		}
 	}
 
-	while (true)
+	if (stable)
+		return;
+
+	printf("=\n");
+	print_grid(grid1);
+
+	while (!stable)
 	{
-		corner = grid1[0][0];
-		edge = grid1[0][1];
-		middle = grid1[1][1];
-		if (corner <= 3 && edge <= 3 && middle <= 3)
-			break;
+		topple_all(grid1, temp);
+		add_sand(grid1, temp);
+		stable = is_stable(grid1, temp);
 
-		printf("=\n");
-		print_grid(grid1);
-		/* Only run functions when original assignments are true */
-		if (corner > 3)
-			corner_check(grid1);
-		if (edge > 3)
-			edge_check(grid1);
-		if (middle > 3)
-			middle_check(grid1);
-
+		if (!stable)
+		{
+			printf("=\n");
+        		print_grid(grid1);
+		}
 	}
 }
 
 /**
- * corner_check - topples each corner, adds to edge
+ * topple_all - topples every value greater than 3
  * @grid: 3x3 grid
+ * @temp: 3x3 grid
  *
  * Return: void
  */
-void corner_check(int grid[3][3])
+void topple_all(int grid[3][3], int temp[3][3])
 {
-	int corner = grid[0][0];
+	int i, j;
 
-	if (corner > 3)
+	for (i = 0; i < 3; i++)
 	{
-		/* Corners */
-		grid[0][0] -= 4;
-		grid[0][2] -= 4;
-		grid[2][0] -= 4;
-		grid[2][2] -= 4;
-		/* Edges */
-		grid[0][1] += 2;
-		grid[1][0] += 2;
-		grid[1][2] += 2;
-		grid[2][1] += 2;
+		for (j = 0; j < 3; j++)
+		{
+			temp[i][j] = grid[i][j];
+			if (temp[i][j] > 3)
+				temp[i][j] -= 4;
+		}
 	}
 }
 
 /**
- * edge_check - topples each edge, adds to corners and middle
+ * add_sand - add one grain of sand from grid to temp cells
  * @grid: 3x3 grid
+ * @temp: 3x3 grid
  *
  * Return: void
  */
-void edge_check(int grid[3][3])
+void add_sand(int grid[3][3], int temp[3][3])
 {
-	int edge = grid[0][1];
+	int i, j;
 
-	if (edge > 3)
-	{
-		/* Edges */
-		grid[0][1] -= 4;
-		grid[1][0] -= 4;
-		grid[1][2] -= 4;
-		grid[2][1] -= 4;
-		/* Corners */
-		grid[0][0] += 2;
-		grid[0][2] += 2;
-		grid[2][0] += 2;
-		grid[2][2] += 2;
-		/* Middle */
-		grid[1][1] += 4;
-	}
+        for (i = 0; i < 3; i++)
+        {
+                for (j = 0; j < 3; j++)
+                {
+                        if (grid[i][j] > 3)
+			{
+				if (i - 1 >= 0) 
+                                	temp[i - 1][j] += 1;
+				if (i + 1 < 3)
+					temp[i + 1][j] += 1;
+				if (j - 1 >= 0)
+					temp[i][j - 1] += 1;
+				if (j + 1 < 3)
+					temp[i][j + 1] += 1;
+			}
+		}
+        }
 }
 
 /**
- * middle_check - topples the middle, adds to edges
+ * is_stable - copy temp back to grid, check if grid is stable
  * @grid: 3x3 grid
+ * @temp: 3x3 grid
  *
- * Return: void
+ * Return: true if stable false otherwise 
  */
-void middle_check(int grid[3][3])
+bool is_stable(int grid[3][3], int temp[3][3])
 {
-	int middle = grid[1][1];
+	int i, j;
+	bool stable = true;
 
-	if (middle > 3)
-	{
-		/* Middle */
-		grid[1][1] -= 4;
-		/* Edges */
-		grid[0][1] += 1;
-		grid[1][0] += 1;
-		grid[1][2] += 1;
-		grid[2][1] += 1;
-	}
+        for (i = 0; i < 3; i++)
+        {
+                for (j = 0; j < 3; j++)
+                {
+                        grid[i][j] = temp[i][j];
+
+                        if (temp[i][j] > 3)
+                                stable = false;
+
+			temp[i][j] = 0;
+                }
+        }
+
+	return (stable);
 }
 
 /**
