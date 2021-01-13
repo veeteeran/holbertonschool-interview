@@ -27,6 +27,7 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 	{
 		printf("=\n");
 		print_grid(grid1);
+
 		topple_all(grid1, temp);
 		add_sand(grid1, temp);
 		stable = is_stable(grid1, temp);
