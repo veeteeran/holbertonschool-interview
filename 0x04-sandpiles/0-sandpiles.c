@@ -16,14 +16,17 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 	for (i = 0; i < 3; i++)
 	{
 		for (j = 0; j < 3; j++)
+		{
 			grid1[i][j] = grid1[i][j] + grid2[i][j];
+			if (grid1[i][j] <= 3)	
+				stable = true;
+		}	
 	}
 
 	while (!stable)
 	{
 		printf("=\n");
 		print_grid(grid1);
-
 		topple_all(grid1, temp);
 		add_sand(grid1, temp);
 		stable = is_stable(grid1, temp);
@@ -101,7 +104,7 @@ bool is_stable(int grid[3][3], int temp[3][3])
 			grid[i][j] = temp[i][j];
 
 			if (temp[i][j] > 3)
-				stable = false;
+				stable = 0;
 
 			temp[i][j] = 0;
 		}
