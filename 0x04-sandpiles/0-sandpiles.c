@@ -105,7 +105,7 @@ bool is_stable(int grid[3][3], int temp[3][3])
 			grid[i][j] = temp[i][j];
 
 			if (temp[i][j] > 3)
-				stable = 0;
+				stable = false;
 
 			temp[i][j] = 0;
 		}
