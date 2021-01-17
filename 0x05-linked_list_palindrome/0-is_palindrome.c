@@ -7,7 +7,7 @@
  */
 int is_palindrome(listint_t **head)
 {
-	int length;
+	int first, second, length;
 
 	/* There is no list */
 	if (!head)
@@ -26,5 +26,11 @@ int is_palindrome(listint_t **head)
 		return (0);
 	}
 
-	return (check_nodes(*head, length));
+	first = (length / 2) - 1;
+	second = length / 2;
+	/* If length is odd, move second pointer one node after the middle */
+	if (length % 2 != 0)
+		second += 1;
+
+	return (check_nodes(*head, first, second));
 }

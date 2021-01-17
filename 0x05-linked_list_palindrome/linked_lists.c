@@ -99,21 +99,15 @@ int list_length(listint_t *head)
 /**
  * check_nodes - loops through the list checking equality of nodes
  * @head: pointer to list
- * @length: length of list
+ * @first: length of first half of palindrome
+ * @second: beginning of second half of palindrome
  * Return: 1 if palindrome, 0 if not
  */
-int check_nodes(listint_t *head, int length)
+int check_nodes(listint_t *head, int first, int second)
 {
-	int i, j, first, second;
+	int i, j;
 	listint_t *first_mover, *second_mover;
 
-	first = (length / 2) - 1;
-	second = length / 2;
-	/* If length is odd, move second pointer one node after the middle */
-	if (length % 2 != 0)
-		second += 1;
-
-	second_mover = head;
 	while (second_mover->next)
 	{
 		first_mover = head;
@@ -126,10 +120,9 @@ int check_nodes(listint_t *head, int length)
 
 		if (first_mover->n != second_mover->n)
 			return (0);
-		/* Move the starting point by one node */
-		first--;
-		second++;
 	}
 
-	return (1);
+	if (!second_mover->next)
+		return (1);
+	return (check_nodes(head, first - 1, second + 1));
 }
