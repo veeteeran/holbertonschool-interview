@@ -1,4 +1,5 @@
 #include "lists.h"
+int check_arr(int *arr, int start, int end);
 
 /**
  * is_palindrome - checks if a singly linked list is a palindrome
@@ -7,7 +8,8 @@
  */
 int is_palindrome(listint_t **head)
 {
-	int first, second, length;
+	int i, length, *arr;
+	listint_t *mover;
 
 	/* There is no list */
 	if (!head)
@@ -26,11 +28,34 @@ int is_palindrome(listint_t **head)
 		return (0);
 	}
 
-	first = (length / 2) - 1;
-	second = length / 2;
-	/* If length is odd, move second pointer one node after the middle */
-	if (length % 2 != 0)
-		second += 1;
+	arr = malloc(length * sizeof(int));
+	if (!arr)
+		return (0);
+	/* Populate array */
+	mover = *head;
+	for (i = 0; i < length; i++)
+	{
+		arr[i] = mover->n;
+		mover = mover->next;
+	}
 
-	return (check_nodes(*head, first, second));
+	return (check_arr(arr, 0, length - 1));
+}
+
+/**
+ * check_arr - recursively check if array is a palindrome
+ * @arr: pointer to the array
+ * @start: start index
+ * @end: end index
+ * Return: 1 if palindrom, 0 if not
+ */
+int check_arr(int *arr, int start, int end)
+{
+	if (arr[start] != arr[end])
+		return (0);
+
+	if (start > end)
+		return (1);
+
+	return (check_arr(arr, start + 1, end - 1));
 }
