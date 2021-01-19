@@ -9,7 +9,7 @@ int check_arr(int *arr, int start, int end);
  */
 int is_palindrome(listint_t **head)
 {
-	int i, length, *arr;
+	int i, length, arr[4096];
 	listint_t *mover;
 
 	/* There is no list */
@@ -29,9 +29,6 @@ int is_palindrome(listint_t **head)
 		return (0);
 	}
 
-	arr = malloc(length * sizeof(int));
-	if (!arr)
-		return (0);
 	/* Populate array */
 	mover = *head;
 	for (i = 0; i < length; i++)
