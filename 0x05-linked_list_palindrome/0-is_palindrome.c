@@ -1,4 +1,5 @@
 #include "lists.h"
+int list_length(listint_t *head);
 int check_arr(int *arr, int start, int end);
 
 /**
@@ -42,6 +43,28 @@ int is_palindrome(listint_t **head)
 	return (check_arr(arr, 0, length - 1));
 }
 
+/**
+ * list_length - counts nodes in list
+ * @head: pointer to list
+ * Return: length of list
+ */
+int list_length(listint_t *head)
+{
+	listint_t *mover;
+	int nodes = 1;
+
+	if (!head)
+		return (0);
+
+	mover = head;
+	while (mover && mover->next)
+	{
+		mover = mover->next;
+		nodes++;
+	}
+
+	return (nodes);
+}
 /**
  * check_arr - recursively check if array is a palindrome
  * @arr: pointer to the array
