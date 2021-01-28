@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
             file_size += int(line.split()[-1])
             # Status code is key, value is number of occurences
-            status_code = int(line.split()[-2])
+            status_code = line.split()[-2]
             if status_code in my_dict:
                 my_dict[status_code] += 1
             else:
