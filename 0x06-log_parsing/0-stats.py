@@ -12,6 +12,10 @@ if __name__ == "__main__":
     try:
         # open and read file
         for line in stdin:
+            # Check if line is empty
+            if line is None:
+                continue
+
             file_size += int(line.split()[-1])
             # Status code is key, value is number of occurences
             status_code = int(line.split()[-2])
