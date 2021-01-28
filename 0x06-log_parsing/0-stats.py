@@ -1,13 +1,12 @@
 #!/usr/bin/python3
 """Reads stdin line by line and computes metrics"""
-import operator
 from sys import stdin, stdout
 import traceback
 
 
 # save as a dict using key/value
 my_dict = {0: 0}
-counter = 1
+counter = 0
 try:
     # open and read file
     for line in stdin:
@@ -29,6 +28,7 @@ try:
         else:
             my_dict[status_code] = 1
 
+        counter += 1
         # Print after ten lines (keep track in a variable)
         if counter % 10 == 0:
             # Print status code in ascending order, sort by key(?)
@@ -37,7 +37,6 @@ try:
                     print("File size: {}".format(my_dict[k]))
                 else:
                     print("{}: {}".format(k, my_dict[k]))
-        counter += 1
 # Print after keyboard interrupt CTRL+C
 except KeyboardInterrupt as e:
     for k in sorted(my_dict):
@@ -46,5 +45,7 @@ except KeyboardInterrupt as e:
         else:
             print("{}: {}".format(k, my_dict[k]))
 
-#    traceback.print_tb(tb)
-    traceback.print_exc(file=stdout)
+#    print("This is e", e)
+#    traceback.print_exc(file=stdout)
+#    traceback.print_exc(limit=2, file=stdout)
+    raise
