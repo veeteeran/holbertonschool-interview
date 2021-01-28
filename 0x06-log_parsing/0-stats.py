@@ -13,7 +13,7 @@ if __name__ == "__main__":
         # open and read file
         for line in stdin:
             # Check if line is empty
-            if line is None:
+            if line == "":
                 continue
 
             file_size += int(line.split()[-1])
