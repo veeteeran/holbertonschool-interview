@@ -27,6 +27,11 @@ if __name__ == "__main__":
                 # Print status code in ascending order, sort by key(?)
                 for k in sorted(my_dict):
                     print("{}: {}".format(k, my_dict[k]))
+
+        print("File size: {}".format(file_size))
+        # Print status code in ascending order, sort by key(?)
+        for k in sorted(my_dict):
+            print("{}: {}".format(k, my_dict[k]))
     # Print after keyboard interrupt CTRL+C
     except KeyboardInterrupt as e:
         print("File size: {}".format(file_size))
