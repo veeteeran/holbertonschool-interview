@@ -11,12 +11,15 @@ def validUTF8(data):
     mask = 255
     index = 0
     while (index < length):
+        # bitmask to pull least significant 8 bits
+        d = data[index] & mask
+        # Valid 1 byte values
+        if d < 128:
+            index += 1
+            continue
         for i in range(index + 1):
             # bitmask to pull least significant 8 bits
             d = data[i] & mask
-            # Values less are valid
-            if d < 128:
-                continue
             # This range signifies a 2 byte block
             if d > 191 and d < 224:
                 byte_two = data[i + 1] & mask
