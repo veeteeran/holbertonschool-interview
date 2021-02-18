@@ -11,7 +11,7 @@ def validUTF8(data):
     length = len(data)
     mask = 255
     index = 0
-    while (index < length):
+    while (index < length - 1):
         # bitmask to pull least significant 8 bits
         d = data[index] & mask
         # Valid 1 byte values
@@ -52,7 +52,6 @@ def validUTF8(data):
                         continue
                     else:
                         return False
-                index += 1
             except:
                 return False
 
