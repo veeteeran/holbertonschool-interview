@@ -12,13 +12,6 @@ def validUTF8(data):
     mask = 255
     index = 0
     while (index < length):
-        # bitmask to pull least significant 8 bits
-#        d = data[index] & mask
-        # Valid 1 byte values
-#        if d < 128:
-#            index += 1
-#            continue
-#        else:
         try:
             # bitmask to pull least significant 8 bits
             d = data[index] & mask
@@ -27,7 +20,6 @@ def validUTF8(data):
                 byte_two = data[index + 1] & mask
                 if byte_two > 127 and byte_two < 192:
                     index += 2
-#                    continue
                 else:
                     return False
             # This range signifies a 3 byte block
@@ -37,7 +29,6 @@ def validUTF8(data):
                 if (byte_two > 127 and byte_two < 192)\
                         and (byte_three > 127 and byte_three < 192):
                     index += 3
-#                    continue
                 else:
                     return False
             # This range signifies a 4 byte block
@@ -49,7 +40,6 @@ def validUTF8(data):
                         and (byte_three > 127 and byte_three < 192)\
                         and (byte_four > 127 and byte_four < 192):
                     index += 4
-#                    continue
                 else:
                     return False
         except:
