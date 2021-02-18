@@ -17,7 +17,7 @@ def validUTF8(data):
                 return False
             # bitmask to pull least significant 8 bits
             d = data[index] & mask
-            # Continuation block seen before a header is seen
+            # Continuation block without a header
             if d > 127 and d < 192:
                 return False
             # This range signifies a 2 byte block
@@ -47,7 +47,7 @@ def validUTF8(data):
                     index += 4
                 else:
                     return False
-        except:
+        except IndexError:
             return False
         else:
             # All other values are valid, move to next element
