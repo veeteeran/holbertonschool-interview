@@ -27,7 +27,7 @@ def validUTF8(data):
             if d > 193 and d < 224:
                 byte_two = data[index + 1] & mask
                 if byte_two > 127 and byte_two < 192:
-                    index += 2
+                    index += 1
                 else:
                     return False
             # This range signifies a 3 byte block
@@ -36,7 +36,7 @@ def validUTF8(data):
                 byte_three = data[index + 2] & mask
                 if (byte_two > 127 and byte_two < 192)\
                         and (byte_three > 127 and byte_three < 192):
-                    index += 3
+                    index += 2
                 else:
                     return False
             # This range signifies a 4 byte block
@@ -47,7 +47,7 @@ def validUTF8(data):
                 if (byte_two > 127 and byte_two < 192)\
                         and (byte_three > 127 and byte_three < 192)\
                         and (byte_four > 127 and byte_four < 192):
-                    index += 4
+                    index += 3
                 else:
                     return False
         except IndexError:
