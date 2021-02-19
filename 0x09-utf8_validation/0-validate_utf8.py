@@ -12,11 +12,9 @@ def validUTF8(data):
     mask = 255
     index = 0
     while (index < length):
-        if data[index] < 0:
+        if data[index] < 0 or type(data[index]) is not int:
             return False
         try:
-            if type(data[index]) is not int:
-                return False
             # bitmask to pull least significant 8 bits
             d = data[index] & mask
             # Continuation block without a header
