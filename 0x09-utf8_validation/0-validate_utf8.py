@@ -12,6 +12,8 @@ def validUTF8(data):
     mask = 255
     index = 0
     while (index < length):
+        if data[index] < 0:
+            return False
         try:
             if type(data[index]) is not int:
                 return False
