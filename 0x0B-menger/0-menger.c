@@ -1,6 +1,6 @@
 #include "menger.h"
 #include <math.h>
-void print_square();
+void level_one(void);
 /**
  * menger - draws a 2D Menger Sponge
  * @level: level of the Menger Sponge to draw
@@ -10,20 +10,19 @@ void print_square();
 
 void menger(int level)
 {
-
 	if (level == 0)
 		printf("#\n");
 
 	if (level == 1)
-		print_square();
+		level_one();
 }
 
 /**
- * print_square - print a 2D Menger Sponge
+ * level_one - print a 2D Menger Sponge
  *
  * Return: void
  */
-void print_square()
+void level_one(void)
 {
 	int col, row;
 
