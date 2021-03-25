@@ -1,5 +1,5 @@
 #include "binary_trees.h"
-
+void binary_tree_delete(avl_t **tree);
 /**       
  * sorted_array_to_avl - Builds an AVL tree from an array
  * @array: pointer to the first element of the array to be converted
@@ -19,6 +19,7 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
     
         return (tree);
 }
+
 /**
  * create_tree - creates an AVL tree
  * @tree: pointer to the tree 
@@ -32,6 +33,12 @@ avl_t *create_tree(avl_t **tree, int *array, size_t size, int flag)
 {            
         size_t mid = (size - 1) / 2;
         avl_t *node = node_maker(array[mid]);
+
+	if (!node)
+	{
+		binary_tree_delete(tree);
+		return (NULL);
+	}
 
         if (size == 0)
                 return (*tree);
@@ -65,10 +72,28 @@ avl_t *node_maker(int n)
         if (!node)
                 return (NULL);
 
-        node->parent = NULL;
         node->n = n;
+        node->parent = NULL;
         node->left = NULL;
         node->right = NULL;
 
         return (node);
+}
+
+/**
+ * binary_tree_delete - removes an entire binary tree
+ * @tree: pointer to the root node of the tree to remove
+ *
+ */
+void binary_tree_delete(avl_t **tree)
+{
+	if (tree == NULL)
+		return;
+
+	if (tree->left)
+		binary_tree_delete(tree->left);
+	if (tree->right)
+		binary_tree_delete(tree->right);
+	free(tree);
+	/* tree = NULL */
 }
