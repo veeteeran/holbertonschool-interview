@@ -13,7 +13,7 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
 	int flag = 1;
 
 	if (!array)
-                return (NULL);
+		return (NULL);
 
 	create_tree(&tree, array, size, flag);
 
