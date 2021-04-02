@@ -10,7 +10,6 @@ skiplist_t *linear_skip(skiplist_t *list, int value)
 {
 	skiplist_t *h = NULL;
 	skiplist_t *t = NULL;
-	size_t last;
 
 	if (!list || list->n > value)
 		return (NULL);
@@ -29,9 +28,9 @@ skiplist_t *linear_skip(skiplist_t *list, int value)
 	}
 	if (!t)
 	{
-		for (t = h, last = h->index; t->next; t = t->next, last++)
+		for (t = h; t->next; t = t->next)
 			continue;
-		printf("Value found between indexes [%lu] and [%lu]\n", h->index, last);
+		printf("Value found between indexes [%lu] and [%lu]\n", h->index,t->index);
 	}
 	while (h)
 	{
