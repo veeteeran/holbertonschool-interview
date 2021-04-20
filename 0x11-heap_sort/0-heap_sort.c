@@ -1,5 +1,4 @@
 #include "sort.h"
-void swap(int *array, int *parent, int *child);
 /**
  * heap_sort - sorts an array of integers in ascending order
  * @array: array of ints
@@ -48,6 +47,7 @@ void heapify(int *array, size_t size, size_t index)
 }
 /**
  * swap - swaps two elements
+ * @array: array passed in
  * @parent: parent value
  * @child: child value
  *
