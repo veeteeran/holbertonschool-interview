@@ -11,12 +11,12 @@ void heap_sort(int *array, size_t size)
 	int i, j;
 
 	for (i = (int)size / 2 - 1; i > 0; i--)
-		heapify(array, size, i);
+		heapify(array, size, i - 1, size);
 
 	for (j = (int)size - 1; j > 0; j--)
 	{
-		swap(array, &array[0], &array[j]);
-		heapify(array, j, 0);
+		swap(array, size, &array[0], &array[j]);
+		heapify(array, size, 0, j);
 	}
 }
 /**
@@ -24,46 +24,44 @@ void heap_sort(int *array, size_t size)
  * @array: array to heapify
  * @size: size of array
  * @index: index of "root" node
+ * @sub_size: size of sub_tree
  *
  * Return: nothing
  **/
-void heapify(int *array, size_t size, size_t index)
+void heapify(int *array, size_t size, size_t index, size_t sub_size)
 {
 	int parent = index;
 	int left = (index * 2) + 1;
 	int right = (index * 2) + 2;
 
-	if (left < (int)size && array[left] > array[parent])
+	if (left < (int)sub_size && array[left] > array[parent])
 		parent = left;
 
-	if (right < (int)size && array[right] > array[parent])
+	if (right < (int)sub_size && array[right] > array[parent])
 		parent = right;
 
 	if (parent != (int)index)
 	{
-		swap(array, &array[index], &array[parent]);
-		heapify(array, size, parent);
+		swap(array, size, &array[index], &array[parent]);
+		heapify(array, size, parent, sub_size);
 	}
 }
 /**
  * swap - swaps two elements
  * @array: array passed in
+ * @size: size of array
  * @parent: parent value
  * @child: child value
  *
  * Return: nothing
  **/
-void swap(int *array, int *parent, int *child)
+void swap(int *array, size_t size, int *parent, int *child)
 {
 	int temp;
-	size_t i;
 
 	temp = *parent;
 	*parent = *child;
 	*child = temp;
 
-	for (i = 0; array[i]; i++)
-		continue;
-
-	print_array(array, i);
+	print_array(array, size);
 }
