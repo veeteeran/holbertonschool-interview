@@ -10,10 +10,10 @@ void heap_sort(int *array, size_t size)
 {
 	int i, j;
 
-	for (i = (int)size / 2 - 1; i >= 0; i--)
+	for (i = (int)size / 2 - 1; i > 0; i--)
 		heapify(array, size, i);
 
-	for (j = (int)size - 1; j >= 0; j--)
+	for (j = (int)size - 1; j > 0; j--)
 	{
 		swap(array, &array[0], &array[j]);
 		heapify(array, j, 0);
