@@ -13,8 +13,8 @@ void heap_sort(int *array, size_t size)
 	if (!array)
 		return;
 
-	for (i = ((int)size / 2) - 1; i > 0; i--)
-		heapify(array, size, i, size);
+	for (i = (int)size / 2; i > 0; i--)
+		heapify(array, size, i - 1, size);
 
 	for (j = (int)size - 1; j > 0; j--)
 	{
