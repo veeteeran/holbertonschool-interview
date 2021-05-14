@@ -9,5 +9,8 @@
 
 int heap_extract(heap_t **root)
 {
+	if (!(*root) || !root)
+		return (0);
+
 	return ((*root)->n);
 }
