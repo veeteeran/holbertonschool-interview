@@ -27,17 +27,17 @@ int main(int argc, char **argv)
 		if (!_isdigit(argv[1][i]))
 		{
 			printf("Error\n");
-                	exit(98);
+			exit(98);
 		}
 	}
 
 	for (j = 0; j < _strlen(argv[2]); j++)
 	{
-                if (!_isdigit(argv[2][j]))
-                {
-                        printf("Error\n");
-                        exit(98);
-                }
+		if (!_isdigit(argv[2][j]))
+		{
+			printf("Error\n");
+			exit(98);
+		}
 	}
 	num1 = _atoi(argv[1]);
 	num2 = _atoi(argv[2]);
@@ -87,8 +87,8 @@ int _atoi(char *s)
 	int digit = 0, num = 0, b_10 = 1;
 	int start, end, ndx = 0, negative = 0;
 
-	if(s[ndx] == '\0')
-		return 0;
+	if (s[ndx] == '\0')
+		return (0);
 	while (s[ndx] && !(digit))
 	{
 		if (s[ndx] == '-')
