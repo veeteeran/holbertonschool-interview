@@ -23,7 +23,7 @@ List *add_node_end(List **list, char *str)
 	new->prev = NULL;
 	new->next = NULL;
 	new->str = strdup(str);
-	if (!*list)
+	if (!(*list))
 	{
 		*list = new;
 		new->prev = new->next;
