@@ -12,6 +12,7 @@ int _strlen(char *s);
 List *add_node_end(List **list, char *str)
 {
 	List *new, *last;
+	char *dupe;
 
 	if (!list)
 		return (NULL);
@@ -20,9 +21,13 @@ List *add_node_end(List **list, char *str)
 	if (!new)
 		return (NULL);
 
+	dupe = strdup(str);
+	if (!dupe)
+		return (NULL);
+
 	new->prev = NULL;
 	new->next = NULL;
-	new->str = strdup(str);
+	new->str = dupe;
 	if (!(*list))
 	{
 		new->next = new->prev = new;
@@ -49,6 +54,7 @@ List *add_node_end(List **list, char *str)
 List *add_node_begin(List **list, char *str)
 {
 	List *new, *last;
+	char *dupe;
 
 	if (!list)
 		return (NULL);
@@ -56,17 +62,21 @@ List *add_node_begin(List **list, char *str)
 	new = malloc(sizeof(List));
 	if (!new)
 		return (NULL);
-        
+
+	dupe = strdup(str);
+	if (!dupe)
+		return (NULL);
+
 	new->prev = NULL;
 	new->next = NULL;
-	new->str = strdup(str);
+	new->str = dupe;
 	if (!(*list))
 	{
 		new->prev = new->next = new;
 		*list = new;
 	}
 	else
-	{       
+	{
 		last = (*list)->prev;
 		last->next = new;
 		new->prev = last;
