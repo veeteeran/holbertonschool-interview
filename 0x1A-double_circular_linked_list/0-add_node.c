@@ -50,29 +50,30 @@ List *add_node_begin(List **list, char *str)
 {
 	List *new, *last;
 
-        if (!list)
-                return (NULL);
+	if (!list)
+		return (NULL);
 
-        new = malloc(sizeof(List));
-        if (!new)
-                return (NULL);
+	new = malloc(sizeof(List));
+	if (!new)
+		return (NULL);
         
-        new->prev = NULL;
-        new->next = NULL;
-        new->str = strdup(str);
-        if (!*list)
-        {
-                *list = new;
-                new->prev = new->next;
-                new->next = new->prev;
-        }      
-	else
-        {       
-                last = *list;
-                new->next = *list;
-                new->prev = last;
-                last->next = (*list)->prev = new;
+	new->prev = NULL;
+	new->next = NULL;
+	new->str = strdup(str);
+	if (!(*list))
+	{
+		new->prev = new->next = new;
 		*list = new;
-        }
-        return (new);
+	}
+	else
+	{       
+		last = (*list)->prev;
+		last->next = new;
+		new->prev = last;
+		new->next = *list;
+		(*list)->prev = new;
+		last = *list;
+		*list = new;
+	}
+	return (new);
 }
