@@ -25,13 +25,12 @@ List *add_node_end(List **list, char *str)
 	new->str = strdup(str);
 	if (!(*list))
 	{
+		new->next = new->prev = new;
 		*list = new;
-		new->prev = new->next;
-		new->next = new->prev;
-	}	
+	}
 	else
 	{
-		last = *list;
+		last = (*list)->prev;
 		new->next = *list;
 		(*list)->prev = new;
 		new->prev = last;
@@ -76,21 +75,4 @@ List *add_node_begin(List **list, char *str)
 		*list = new;
         }
         return (new);
-}
-
-/**
- * _strlen - returns the length of a string
- * @s: the string to check
- *
- * Return: the length of a string as an int
- */
-int _strlen(char *s)
-{
-	int counter;
-
-	for (counter = 0; s[counter] != '\0'; counter++)
-	{
-		continue;
-	}
-	return (counter);
 }
