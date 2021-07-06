@@ -12,6 +12,7 @@ int _strlen(char *s);
 List *add_node_end(List **list, char *str)
 {
 	List *new, *last;
+	char *dupe;
 
 	if (!list)
 		return (NULL);
@@ -20,18 +21,21 @@ List *add_node_end(List **list, char *str)
 	if (!new)
 		return (NULL);
 
+	dupe = strdup(str);
+	if (!dupe)
+		return (NULL);
+
 	new->prev = NULL;
 	new->next = NULL;
-	new->str = strdup(str);
+	new->str = dupe;
 	if (!(*list))
 	{
+		new->next = new->prev = new;
 		*list = new;
-		new->prev = new->next;
-		new->next = new->prev;
-	}	
+	}
 	else
 	{
-		last = *list;
+		last = (*list)->prev;
 		new->next = *list;
 		(*list)->prev = new;
 		new->prev = last;
@@ -50,47 +54,36 @@ List *add_node_end(List **list, char *str)
 List *add_node_begin(List **list, char *str)
 {
 	List *new, *last;
+	char *dupe;
 
-        if (!list)
-                return (NULL);
+	if (!list)
+		return (NULL);
 
-        new = malloc(sizeof(List));
-        if (!new)
-                return (NULL);
-        
-        new->prev = NULL;
-        new->next = NULL;
-        new->str = strdup(str);
-        if (!*list)
-        {
-                *list = new;
-                new->prev = new->next;
-                new->next = new->prev;
-        }      
-	else
-        {       
-                last = *list;
-                new->next = *list;
-                new->prev = last;
-                last->next = (*list)->prev = new;
-		*list = new;
-        }
-        return (new);
-}
+	new = malloc(sizeof(List));
+	if (!new)
+		return (NULL);
 
-/**
- * _strlen - returns the length of a string
- * @s: the string to check
- *
- * Return: the length of a string as an int
- */
-int _strlen(char *s)
-{
-	int counter;
+	dupe = strdup(str);
+	if (!dupe)
+		return (NULL);
 
-	for (counter = 0; s[counter] != '\0'; counter++)
+	new->prev = NULL;
+	new->next = NULL;
+	new->str = dupe;
+	if (!(*list))
 	{
-		continue;
+		new->prev = new->next = new;
+		*list = new;
 	}
-	return (counter);
+	else
+	{
+		last = (*list)->prev;
+		last->next = new;
+		new->prev = last;
+		new->next = *list;
+		(*list)->prev = new;
+		last = *list;
+		*list = new;
+	}
+	return (new);
 }
