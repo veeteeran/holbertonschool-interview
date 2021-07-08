@@ -13,7 +13,7 @@ void radix_sort(int *array, size_t size)
 	int max = get_max(array, (int)size);
 	int place;
 
-	if (size < 2)
+	if (!array || size < 2)
 		return;
 
 	for (place = 1; max / place > 0; place *= 10)
