@@ -84,7 +84,4 @@ void counting_sort(int *array, int size, int place)
 	}
 	for (i = 0; i < size; i++)
 		array[i] = output[i];
-
-	free(output);
-	free(count);
 }
