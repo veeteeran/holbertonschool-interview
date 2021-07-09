@@ -60,9 +60,6 @@ void counting_sort(int *array, int size, int place)
 	int *output, *count, i;
 	int max = (array[0] / place) % 10;
 
-	output = malloc(sizeof(int) * (size + 1));
-	if (!output)
-		return;
 	for (i = 1; i < size; i++)
 	{
 		if (((array[i] / place) % 10) > max)
@@ -77,6 +74,13 @@ void counting_sort(int *array, int size, int place)
 		count[(array[i] / place) % 10]++;
 	for (i = 1; i < 10; i++)
 		count[i] += count[i - 1];
+
+	output = malloc(sizeof(int) * (size + 1));
+	if (!output)
+	{
+		free(count);
+		return;
+	}
 	for (i = size - 1; i >= 0; i--)
 	{
 		output[count[(array[i] / place) % 10] - 1] = array[i];
@@ -86,5 +90,4 @@ void counting_sort(int *array, int size, int place)
 		array[i] = output[i];
 
 	free(output);
-	free(count);
 }
