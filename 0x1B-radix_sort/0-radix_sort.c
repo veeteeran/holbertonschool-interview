@@ -90,4 +90,5 @@ void counting_sort(int *array, int size, int place)
 		array[i] = output[i];
 
 	free(output);
+	free(count);
 }
