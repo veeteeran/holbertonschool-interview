@@ -26,17 +26,12 @@ int regex_match(char const *str, char const *pattern)
 	/* Loop through each string */
 	while (str[i] || pattern[j])
 	{
-		/* !str[i] and !pattern[j] ? return 1
-		if (!str[i] && !pattern[j])
-			return (1); */
 		/* str[i] == pattern[j] ? increment both continue */
 		if (str[i] == pattern[j])
 		{
 			i++;
 			j++;
 		}
-		/* str[i] != pattern[j] ?
-		nested conditions below*/
 		else if (str[i] != pattern[j])
 		{
 		/* pattern[j] == '.' ? increment both */
@@ -57,13 +52,7 @@ int regex_match(char const *str, char const *pattern)
 						return (1);
 			/*   else while str[i] == pattern[j - 1] */
 				while (str[i] == pattern[j - 1])
-				/* increment i, do I need to decrement outside of loop?  */
 					i++;
-				/* !str[i] and !pattern[j + 1] ? return 1
-					if (!str[i] && !pattern[j + 1])
-						return (1);
-				*/
-		/* end nested conditions */
 				j++;
 			}
 			else if (pattern[j + 1] == '*')
@@ -71,9 +60,6 @@ int regex_match(char const *str, char const *pattern)
 			else
 				return (0);
 		}
-		   /* not sure where this check should go
-		      str[i] != pattern[j] ? return 0
-			*/
 	}
 	return (1);
 }
